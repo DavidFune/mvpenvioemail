@@ -12,8 +12,8 @@ module.exports = {
     "<rootDir>__tests__/**/*.spec.ts"
   ],
   transform:{
-    '^.+\\.ts$': 'ts-jet'
+    '^.+\\.ts$': 'ts-jest'
   },
-  preset: 'ts-jest',
+  preset: '@shelf/jest-mongodb',
   testEnvironment: 'node',
 };
