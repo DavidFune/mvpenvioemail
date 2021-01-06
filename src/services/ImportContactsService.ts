@@ -16,11 +16,14 @@ class ImportContactsService {
         }));
 
         const createdTags = await Tag.create(tagsData);
-        const tagsIds = createdTags.map(tag => tag._id);
+        const tagsIds = Object.values(createdTags).map(tag => tag._id)
+
+        
 
         parseCSV.on('data', async line => {
             const [email] = line;
-            await Contact.create({email, tag: tagsIds });
+            console.log('Tags:',tagsIds);
+            await Contact.create({email, tags: tagsIds });
         });
 
         await new Promise(resolve => parseCSV.on('end', resolve))

@@ -38,31 +38,38 @@ describe('Import', () => {
 
         await importContacts.run(contactsFileStream, ['Students', 'Class A'])
 
-        const createdTags = await Tag.find({}).lean();
+        const createdTags = await Tag.find({}, {title:1, _id:1}).lean();
 
-        expect(createdTags).toEqual([
-                expect.objectContaining({ title: 'Students'}),
-                expect.objectContaining({ title: 'Class A'})
-        ]);
+        expect(createdTags).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ title: 'students'}),
+                expect.objectContaining({ title: 'class a'})
+        ])
+        );
 
         const createdTagsIds = createdTags.map(tag => tag._id)
 
-        const createdContacts = await Contact.find({}).lean();
+        const createdContacts = await Contact.find({}, {email:1, tags:1, _id: 0}).lean();
 
-        expect(createdContacts).toEqual([
-            expect.objectContaining({
-                email: 'david@fune.com.br',
-                tags: createdTagsIds,
-            }),
-            expect.objectContaining({
-                email: 'same@fune.com.br',
-                tags: createdTagsIds,
-            }),
-            expect.objectContaining({
-                email: 'farinha@fune.com.br',
-                tags: createdTagsIds,
-            }),
-        ]);
+        console.log(createdContacts);
+        
+
+        expect(createdContacts).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    email: 'david@fune.com.br',
+                    tags: createdTagsIds,
+                }),
+                expect.objectContaining({
+                    email: 'same@fune.com.br',
+                    tags: createdTagsIds,
+                }),
+                expect.objectContaining({
+                    email: 'farinha@fune.com.br',
+                    tags: createdTagsIds,
+                }),
+            ])
+        );
     });
 });
 
