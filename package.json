@@ -30,6 +30,7 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "csv-parse": "^4.14.2",
     "express": "^4.17.1",
     "mongoose": "^5.11.10"
   }

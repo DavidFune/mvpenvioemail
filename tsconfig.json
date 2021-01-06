@@ -1,69 +1,25 @@
 {
-  "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig.json to read more about this file */
-
-    /* Basic Options */
-    // "incremental": true,                   
-    "target": "es5",                          
-    "module": "commonjs",                     
-    // "lib": [],                             
-    "allowJs": true,                       
-    // "checkJs": true,                       
-    // "jsx": "preserve",                     
-    // "declaration": true,                   
-    // "declarationMap": true,                
-    // "sourceMap": true,                     
-    // "outFile": "./",                       
+  "compilerOptions": {                
+    "target": "es2017",                          
+    "module": "commonjs",                                                
+    "allowJs": true,                                             
     "outDir": "./dist",                        
-    "rootDir": "./src",                       
-    // "composite": true,                     
-    // "tsBuildInfoFile": "./",               
-    // "removeComments": true,                
-    // "noEmit": true,                        
-    // "importHelpers": true,                 
-    // "downlevelIteration": true,            
-    // "isolatedModules": true,       
+    "rootDir": "./src",                            
     "strict": true,                           
-    "noImplicitAny": true,                 
-    // "strictNullChecks": true,              
-    // "strictFunctionTypes": true,           
-    // "strictBindCallApply": true,           
+    "noImplicitAny": true,                          
     "strictPropertyInitialization": false,  
-    // "noImplicitThis": true,                
-    // "alwaysStrict": true,                  
-    /* Additional Checks *
-    // "noUnusedLocals": true,                
-    // "noUnusedParameters": true,            
-    // "noImplicitReturns": true,             
-    // "noFallthroughCasesInSwitch": true,    
-    /* Module Resolution Options */
     "moduleResolution": "node",           
-    // "baseUrl": "./",                      
-    // "paths": {},                          
-    // "rootDirs": [],                       
-    // "typeRoots": [],                      
-    // "types": [],                          
+    "baseUrl": "./src",                                              
     "allowSyntheticDefaultImports": true, 
     "esModuleInterop": true,                 
-    // "preserveSymlinks": true,             
-    // "allowUmdGlobalAccess": true,         
-
-    /* Source Map Options */
-    // "sourceRoot": "",                     
-    // "mapRoot": "",                        
-    // "inlineSourceMap": true,              
-    // "inlineSources": true,                
-
-    /* Experimental Options */
     "experimentalDecorators": true,        
     "emitDecoratorMetadata": true,         
-
-    /* Advanced Options */
     "skipLibCheck": true,                     
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@services/*":["./services/*"]
+      "@services/*":["services/*"],
+      "@schemas/*":["schemas/*"]
     }
   },
-  "include": ["src", "__tests__"]
+  "include": ["src"]
 }

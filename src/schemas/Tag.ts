@@ -1,6 +1,6 @@
-import mongoose, {Document, Schema}from 'mongoose'
+import mongoose, {Document, Schema, Model}from 'mongoose'
 
-type Tag = Document & {};
+export type Tag = Document & {};
 
 const TagSchema = new Schema(
     {
