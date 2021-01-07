@@ -8,7 +8,7 @@ import Tag from '@schemas/Tag'
 //TDD RED - GREEN - REFACTOR
 describe('Import', () => {
     beforeAll(async () => {
-        if(!process.env.MONGO_URL){
+        if (!process.env.MONGO_URL) {
             throw new Error("MongoDB server not initialized");
         }
         await mongose.connect(process.env.MONGO_URL, {
@@ -36,23 +36,22 @@ describe('Import', () => {
 
         const importContacts = new ImportContactsService();
 
-        await importContacts.run(contactsFileStream, ['Students', 'Class A'])
+        await importContacts.run(contactsFileStream, ['students', 'class a'])
 
-        const createdTags = await Tag.find({}, {title:1, _id:1}).lean();
+        //const createdTags = await Tag.find({}, { title: 1, _id: 1 }).lean();
+
+        const createdTags = await Tag.find({}).lean();
 
         expect(createdTags).toEqual(
             expect.arrayContaining([
-                expect.objectContaining({ title: 'students'}),
-                expect.objectContaining({ title: 'class a'})
-        ])
+                expect.objectContaining({ title: 'students' }),
+                expect.objectContaining({ title: 'class a' })
+            ])
         );
 
         const createdTagsIds = createdTags.map(tag => tag._id)
 
-        const createdContacts = await Contact.find({}, {email:1, tags:1, _id: 0}).lean();
-
-        console.log(createdContacts);
-        
+        const createdContacts = await Contact.find({}).lean();
 
         expect(createdContacts).toEqual(
             expect.arrayContaining([
@@ -68,6 +67,29 @@ describe('Import', () => {
                     email: 'farinha@fune.com.br',
                     tags: createdTagsIds,
                 }),
+            ])
+        );
+    });
+
+    it('should not recreate tags that already exists', async () => {
+        const contactsFileStream = Readable.from([
+            'david@fune.com.br\n',
+            'same@fune.com.br\n',
+            'farinha@fune.com.br\n',
+        ]);
+
+        const importContacts = new ImportContactsService();
+
+        await Tag.create({ title: 'students' });
+
+        await importContacts.run(contactsFileStream, ['Students', 'Class A']);
+
+        const createdTags = await Tag.find({}).lean();
+
+        expect(createdTags).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ title: 'students' }),
+                expect.objectContaining({ title: 'class a' })
             ])
         );
     });
